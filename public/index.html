@@ -1,6 +1,6 @@
 <!doctype html>
 
-<title>Blake Super COol</title>
+<title>Save Snips</title>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="libs/lib/codemirror.css">
 <link rel="stylesheet" href="libs/theme/3024-day.css">
@@ -54,20 +54,24 @@
 <script src="libs/mode/javascript/javascript.js"></script>
 <script src="libs/addon/selection/active-line.js"></script>
 <script src="libs/addon/edit/matchbrackets.js"></script>
+<script src="libs/jquery-3.2.0.min.js"></script>
+
 <style type="text/css">
       .CodeMirror {border: 1px solid black; font-size:13px}
-    </style>
+</style>
+
+
 <div id=nav>
-  <h1>Blakes New Super Cool Editor Thing</h1>
+  <h1>Snippet Saver</h1>
 </div>
 
 <article>
-<h2>Gimme Some Code</h2>
-<form>
-    <textarea id="code" name="code">
-
-    </textarea>
+<h2>Enter Code</h2>
+<form action="/add-snip" method="post" name="textarea">
+    <textarea id="code" name="code"></textarea>
+    <button type="submit">Add Snip</button>
 </form>
+
 
 <p>Select a theme: <select onchange="selectTheme()" id=select>
     <option selected>default</option>
@@ -121,31 +125,46 @@
     <option>zenburn</option>
 </select>
 </p>
-
+    <div id="showall"></div>
 <script>
-  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-    lineNumbers: true,
-    styleActiveLine: true,
-    matchBrackets: true
-  });
-  var input = document.getElementById("select");
-  function selectTheme() {
-    var theme = input.options[input.selectedIndex].textContent;
-    editor.setOption("theme", theme);
-    location.hash = "#" + theme;
-  }
-  var choice = (location.hash && location.hash.slice(1)) ||
-               (document.location.search &&
-                decodeURIComponent(document.location.search.slice(1)));
-  if (choice) {
-    input.value = choice;
-    editor.setOption("theme", choice);
-  }
-  CodeMirror.on(window, "hashchange", function() {
-    var theme = location.hash.slice(1);
-    if (theme) { input.value = theme; selectTheme(); }
-  });
+    function getAllSnips(snipData) {
+        for(var i in snipData) {
+            console.log(snipData);
+            var snip = snipData[i];
+            var elem = $("#showall");
+            var ta1 = $("<textarea>", {id:"code", name:"code"}).append(snip.text);
+            elem.append(ta1);
+            elem.append("<br/>");
+        }
+    }
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        styleActiveLine: true,
+        matchBrackets: true
+    });
+
+      var input = document.getElementById("select");
+
+      function selectTheme() {
+        var theme = input.options[input.selectedIndex].textContent;
+        editor.setOption("theme", theme);
+        location.hash = "#" + theme;
+      }
+      var choice = (location.hash && location.hash.slice(1)) ||
+                   (document.location.search &&
+                    decodeURIComponent(document.location.search.slice(1)));
+      if (choice) {
+        input.value = choice;
+        editor.setOption("theme", choice);
+      }
+
+      CodeMirror.on(window, "hashchange", function() {
+        var theme = location.hash.slice(1);
+        if (theme) { input.value = theme; selectTheme(); }
+     });
 
 
+    $.get("/get-all", getAllSnips);
 </script>
   </article>
