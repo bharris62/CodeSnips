@@ -1,4 +1,4 @@
-package co.snpr.services;
+package co.snpr.repositories;
 
 import co.snpr.entities.Snippet;
 import org.springframework.data.repository.CrudRepository;

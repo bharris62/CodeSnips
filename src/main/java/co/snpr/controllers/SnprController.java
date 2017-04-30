@@ -1,12 +1,10 @@
 package co.snpr.controllers;
 
 import co.snpr.entities.Snippet;
-import co.snpr.services.SnippetRepository;
+import co.snpr.repositories.SnippetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
