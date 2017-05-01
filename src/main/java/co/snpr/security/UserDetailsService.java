@@ -26,10 +26,10 @@ public class UserDetailsService implements org.springframework.security.core.use
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findFirstByUsername(username);
+        User user = userRepository.findFirstByUserName(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), grantedAuthorities);
     }
 }
