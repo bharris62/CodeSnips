@@ -45,6 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Allow login without being logged in
                 .antMatchers(HttpMethod.POST, "/login")
                 .permitAll()
+                .antMatchers(HttpMethod.GET, "/snip")
+                .permitAll()
                 // All other requests must be authenticated
                 .anyRequest()
                 .authenticated().and()

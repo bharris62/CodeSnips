@@ -10,22 +10,22 @@ public class Snippet {
     @GeneratedValue
     int id;
 
-    //
     @Column(nullable=false, length = 100)
     private String title;
 
-    @Column(nullable=false, length = 1000)
+    @Column(nullable=false, length = 500)
     private String description;
+
+    @Column(nullable=false, length = 1000)
+    private String code;
 
     @ManyToOne
     private User user;
 
-    @Transient
-    private int userId;
-
-    public Snippet(String title, String description, User user) {
+    public Snippet(String title, String description, String code, User user) {
         this.title = title;
         this.description = description;
+        this.code = code;
         this.user = user;
     }
 
@@ -64,11 +64,12 @@ public class Snippet {
         this.user = user;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getCode() {
+        return code;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCode(String code) {
+        this.code = code;
     }
+
 }
