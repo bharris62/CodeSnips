@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 // All other requests must be authenticated
                 .anyRequest()
-                .authenticated().and()
+                .permitAll().and() //.authenticated()
                 .cors()
                 .and()
                 // Adds login route

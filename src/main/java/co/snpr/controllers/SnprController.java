@@ -26,8 +26,12 @@ public class SnprController {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
         User user = users.findFirstByUserName(name);
-
-        Snippet s = new Snippet(snip.getTitle(), snip.getDescription(), snip.getCode(), user);
+        Snippet s;
+        if(user == null) {
+            s = new Snippet(snip.getTitle(), snip.getDescription(), snip.getCode(), snip.getLanguage());
+        }else{
+            s = new Snippet(snip.getTitle(), snip.getDescription(), snip.getCode(), user, snip.getLanguage());
+        }
         snippets.save(s);
         return s;
     }

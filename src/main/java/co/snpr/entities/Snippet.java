@@ -2,7 +2,6 @@ package co.snpr.entities;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name="snippets")
 public class Snippet {
@@ -19,14 +18,25 @@ public class Snippet {
     @Column(nullable=false, length = 1000)
     private String code;
 
+    @Column(nullable=false)
+    private String language;
+
     @ManyToOne
     private User user;
 
-    public Snippet(String title, String description, String code, User user) {
+    public Snippet(String title, String description, String code, User user, String language) {
         this.title = title;
         this.description = description;
         this.code = code;
+        this.language = language;
         this.user = user;
+    }
+
+    public Snippet(String title, String description, String code, String language) {
+        this.title = title;
+        this.description = description;
+        this.language = language;
+        this.code = code;
     }
 
     public Snippet() {
@@ -72,4 +82,11 @@ public class Snippet {
         this.code = code;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }
