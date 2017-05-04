@@ -1,28 +1,27 @@
 package co.snpr.entities;
-
 import javax.persistence.*;
 
-/**
- * Created by BHarris on 4/27/17.
- */
 @Entity
 @Table(name="users")
 public class User {
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(unique = true)
-    String userName;
+    private String username;
 
     @Column
-    String email;
+    private String email;
 
     @Column
-    String password;
+    private String password;
 
-    public User(String userName, String password, String email) {
-        this.userName = userName;
+    @Transient
+    private String confirmPassword;
+
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
         this.email = email;
     }
@@ -38,12 +37,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -60,6 +59,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
 

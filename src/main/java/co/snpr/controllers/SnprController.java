@@ -25,7 +25,7 @@ public class SnprController {
     public Snippet addSnip(@RequestBody Snippet snip){
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
-        User user = users.findFirstByUserName(name);
+        User user = users.findFirstByEmail(name);
         Snippet s;
         if(user == null) {
             s = new Snippet(snip.getTitle(), snip.getDescription(), snip.getCode(), snip.getLanguage());
@@ -40,7 +40,7 @@ public class SnprController {
     public Snippet getSnip(@PathVariable("id") Integer id){
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
-        User user = users.findFirstByUserName(name);
+        User user = users.findFirstByEmail(name);
 
         Snippet snip = snippets.findOne(id);
         return snip;
@@ -50,7 +50,7 @@ public class SnprController {
     public List<Snippet> getAllSnips(){
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
-        User user = users.findFirstByUserName(name);
+        User user = users.findFirstByEmail(name);
 
         return (List)snippets.findAll();
     }

@@ -18,30 +18,29 @@ import java.io.IOException;
 public class UserController {
 
     @Autowired
-    UserRepository users;
+    private UserRepository users;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @RequestMapping(name="/users", method = RequestMethod.POST)
     public User registerUser(@RequestBody User data) {
-        String userName = data.getUserName();
+        String userName = data.getUsername();
         String password = data.getPassword();
+        String confirmPassword = data.getConfirmPassword();
         String email = data.getEmail();
 
         User u = new User(userName, bCryptPasswordEncoder.encode(password), email);
         users.save(u);
 
         return u;
-
     }
-
     // view current users
     @RequestMapping(path = "users/current", method = RequestMethod.GET)
     public ResponseEntity<?> currentUser() {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
-        User user = users.findFirstByUserName(name);
+        User user = users.findFirstByEmail(name);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
@@ -52,7 +51,7 @@ public class UserController {
     public User updateUser(HttpServletResponse response, @RequestBody User data, @RequestParam(value = "id", required = false) int id) throws IOException {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
-        User user = users.findFirstByUserName(name);
+        User user = users.findFirstByUsername(name);
 
         if(data.getEmail() != null) {
             user.setEmail(data.getEmail());
@@ -62,7 +61,7 @@ public class UserController {
             user.setPassword(bCryptPasswordEncoder.encode(data.getPassword()));
         }
 
-        if(data.getUserName() != null) {
+        if(data.getUsername() != null) {
             response.sendError(404, "username can't be changed...");
         }
 

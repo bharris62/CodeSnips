@@ -1,8 +1,5 @@
 package co.snpr.security;
 
-/**
- * Created by BHarris on 4/27/17.
- */
 public class AccountCredentials {
 
     private String username;
