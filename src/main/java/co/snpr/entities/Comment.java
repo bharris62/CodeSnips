@@ -12,7 +12,7 @@ public class Comment {
     private int id;
 
     @Column
-    private String content;
+    private String comment;
 
     @ManyToOne
     Snippet snippet;
@@ -23,8 +23,8 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String content, Snippet snippet, User user) {
-        this.content = content;
+    public Comment(String comment, Snippet snippet, User user) {
+        this.comment = comment;
         this.snippet = snippet;
         this.user = user;
     }
@@ -37,12 +37,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public Snippet getSnippet() {
