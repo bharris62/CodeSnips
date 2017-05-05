@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -51,7 +52,14 @@ public class SnprController {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
         User user = users.findFirstByEmail(name);
+        List<Snippet> snips = (List)snippets.findAll();
+        List<Snippet> homePage = new ArrayList<>();
 
-        return (List)snippets.findAll();
+        for(Snippet s : snips) {
+            homePage.add(s);
+            if(homePage.size() == 12) break;
+        }
+
+        return homePage;
     }
 }
