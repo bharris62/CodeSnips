@@ -46,4 +46,15 @@ public class CommentController {
 
         return cmnts;
     }
+
+    @RequestMapping(path="/snip/comment/{id}", method=RequestMethod.DELETE)
+    public Comment deleteComment(@PathVariable String id){
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+        String name = u.getName();
+        User user = users.findFirstByEmail(name);
+
+        Comment t = comments.findOne(Integer.parseInt(id));
+        comments.delete(t);
+        return t;
+    }
 }

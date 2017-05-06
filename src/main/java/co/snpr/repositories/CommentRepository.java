@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
     List<Comment> findAllBySnippetId(int id);
+
 }
