@@ -42,19 +42,17 @@ public class CommentController {
         String name = u.getName();
         User user = users.findFirstByEmail(name);
 
-        List<Comment> cmnts = comments.findAllBySnippetId(Integer.parseInt(id));
+        List<Comment> cmnts = comments.findAllBySnippetIdAndIsLiveTrue(Integer.parseInt(id));
 
         return cmnts;
     }
 
     @RequestMapping(path="/snip/comment/{id}", method=RequestMethod.DELETE)
-    public Comment deleteComment(@PathVariable String id){
+    public void deleteComment(@PathVariable String id){
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
         User user = users.findFirstByEmail(name);
 
-        Comment t = comments.findOne(Integer.parseInt(id));
-        comments.delete(t);
-        return t;
+        comments.updateLive(false, Integer.parseInt(id));
     }
 }

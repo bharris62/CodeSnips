@@ -14,6 +14,9 @@ public class Comment {
     @Column
     private String comment;
 
+    @Column
+    private boolean isLive;
+
     @ManyToOne
     Snippet snippet;
 
@@ -27,6 +30,7 @@ public class Comment {
         this.comment = comment;
         this.snippet = snippet;
         this.user = user;
+        this.isLive = true;
     }
 
     public int getId() {
@@ -59,5 +63,13 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isLive() {
+        return isLive;
+    }
+
+    public void setLive(boolean live) {
+        isLive = live;
     }
 }
