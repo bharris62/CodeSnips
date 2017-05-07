@@ -2,8 +2,6 @@ package co.snpr.entities;
 
 import javax.persistence.*;
 
-import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
-
 @Entity
 @Table(name="comments")
 public class Comment {
@@ -72,4 +70,5 @@ public class Comment {
     public void setLive(boolean live) {
         isLive = live;
     }
+
 }

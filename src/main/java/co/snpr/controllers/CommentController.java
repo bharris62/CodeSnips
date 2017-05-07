@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,10 +28,13 @@ public class CommentController {
     UserRepository users;
 
     @RequestMapping(path="/snip/{id}/comment", method = RequestMethod.POST)
-    public Comment addComment(@RequestBody Comment comment, @PathVariable String id ){
+    public Comment addComment(@RequestBody Comment comment, @PathVariable String id, HttpServletResponse response) throws IOException {
         Authentication u = SecurityContextHolder.getContext().getAuthentication();
         String name = u.getName();
         User user = users.findFirstByEmail(name);
+        if(user == null) {
+            response.sendError(400, "You must be logged in");
+        }
         Snippet snip = snippets.findOne(Integer.parseInt(id));
         Comment c = new Comment(comment.getComment(), snip, user);
         comments.save(c);
@@ -55,4 +60,14 @@ public class CommentController {
 
         comments.updateLive(false, Integer.parseInt(id));
     }
+
+    @RequestMapping(path="snip/comment/rate/{id}", method = RequestMethod.POST)
+    public Comment rateComment(@PathVariable String id, @RequestBody String rate) {
+        Authentication u = SecurityContextHolder.getContext().getAuthentication();
+        String name = u.getName();
+        User user = users.findFirstByEmail(name);
+        Comment c = comments.findOne(Integer.parseInt(id));
+        return c;
+    }
+
 }
