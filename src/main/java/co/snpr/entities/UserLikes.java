@@ -24,9 +24,11 @@ public class UserLikes {
     public UserLikes() {
     }
 
-    public UserLikes(Comment comment, User voter) {
+    public UserLikes(Comment comment, User voter, int upvote, int downvote) {
         this.comment = comment;
         this.userVoter = voter;
+        this.upvote = upvote;
+        this.downvote = downvote;
     }
 
     public int getId() {
